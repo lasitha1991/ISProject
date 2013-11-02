@@ -18,8 +18,8 @@ public class CheckerBoard {
         checkersBoard = new char[boardSize][boardSize];
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
-                checkersBoard[i][j] = '_';
-            }
+                checkersBoard[i][j] = '_';    //EMPTY cell
+            } 
         }
         for (int i = 0; i < (boardSize - 2) / 2; i++) {
             int j;
@@ -29,7 +29,7 @@ public class CheckerBoard {
                 j = 1;
             }
             while (j < boardSize) {
-                checkersBoard[i][j] = 'R';
+                checkersBoard[i][j] = 'R';    //RED piece
                 j += 2;
             }
         }
@@ -41,7 +41,7 @@ public class CheckerBoard {
                 j = 1;
             }
             while (j < boardSize) {
-                checkersBoard[i][j] = 'B';
+                checkersBoard[i][j] = 'B';     //BLACK piece
                 j += 2;
             }
         }
@@ -85,10 +85,10 @@ public class CheckerBoard {
             checkersBoard[sRow][sCol] = '_';
             checkersBoard[dRow][dCol] = tmpType;
             if (tmpType == 'R' && dRow == boardSize - 1) {
-                checkersBoard[dRow][dCol] = 'E';
+                checkersBoard[dRow][dCol] = 'E';     //E to represent RED QUEEN
             }
             if (tmpType == 'B' && dRow == 0) {
-                checkersBoard[dRow][dCol] = 'V';
+                checkersBoard[dRow][dCol] = 'V';     //V to represent BLACK QUEEN
             }
             return true;
         }
