@@ -65,6 +65,22 @@ public class CheckerBoard {
     }
 
     public boolean movePiece(int sRow, int sCol, int dRow, int dCol) {
+        if (isMoveable(sRow, sCol, dRow, dCol)) {
+            char tmpType = checkersBoard[sRow][sCol];
+            checkersBoard[sRow][sCol] = '_';
+            checkersBoard[dRow][dCol] = tmpType;
+            if (tmpType == 'R' && dRow == boardSize - 1) {
+                checkersBoard[dRow][dCol] = 'E';     //E to represent RED QUEEN
+            }
+            if (tmpType == 'B' && dRow == 0) {
+                checkersBoard[dRow][dCol] = 'V';     //V to represent BLACK QUEEN
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isMoveable(int sRow, int sCol, int dRow, int dCol) {
         if (dRow >= boardSize || dRow < 0) {
             return false;
         }
@@ -88,14 +104,6 @@ public class CheckerBoard {
                     return false;
                 }
             }
-            checkersBoard[sRow][sCol] = '_';
-            checkersBoard[dRow][dCol] = tmpType;
-            if (tmpType == 'R' && dRow == boardSize - 1) {
-                checkersBoard[dRow][dCol] = 'E';     //E to represent RED QUEEN
-            }
-            if (tmpType == 'B' && dRow == 0) {
-                checkersBoard[dRow][dCol] = 'V';     //V to represent BLACK QUEEN
-            }
             return true;
         }
         return false;
@@ -112,52 +120,25 @@ public class CheckerBoard {
         if (tmpAttacker == tmpVictim) {
             return false;
         } else {
-            if (tmpAttacker == 'E' || tmpAttacker == 'V') {
-                if (attackerRow > victimRow) {
-                    if (victimCol - 1 >= 0 && victimRow - 1 >= 0 && checkersBoard[victimRow - 1][victimCol - 1] == '_') {
-                        checkersBoard[victimRow][victimCol] = '_';
-                        movePiece(attackerRow, attackerCol, victimRow - 1, victimCol - 1);
-                        return true;
-                    }
-                    if (victimCol + 1 < boardSize && victimRow - 1 >= 0 && checkersBoard[victimRow - 1][victimCol - 1] == '_') {
-                        checkersBoard[victimRow][victimCol] = '_';
-                        movePiece(attackerRow, attackerCol, victimRow - 1, victimCol + 1);
-                        return true;
-                    }
-                }
-                if (attackerRow < victimRow) {
-                    if (victimCol - 1 >= 0 && victimRow + 1 < boardSize && checkersBoard[victimRow + 1][victimCol - 1] == '_') {
-                        checkersBoard[victimRow][victimCol] = '_';
-                        movePiece(attackerRow, attackerCol, victimRow + 1, victimCol - 1);
-                        return true;
-                    }
-                    if (victimCol + 1 < boardSize && victimRow + 1 < boardSize && checkersBoard[victimRow + 1][victimCol - 1] == '_') {
-                        checkersBoard[victimRow][victimCol] = '_';
-                        movePiece(attackerRow, attackerCol, victimRow + 1, victimCol + 1);
-                        return true;
-                    }
-
-                }
-            }
-            if (attackerRow > victimRow && tmpAttacker == 'B') {
-                if (attackerCol > victimCol && victimCol - 1 >= 0 && victimRow - 1 >= 0 && checkersBoard[victimRow - 1][victimCol - 1] == '_') {
+            if (attackerRow > victimRow) {
+                if (isMoveable(attackerRow, attackerCol, victimRow - 1, victimCol - 1)) {
                     checkersBoard[victimRow][victimCol] = '_';
                     movePiece(attackerRow, attackerCol, victimRow - 1, victimCol - 1);
                     return true;
                 }
-                if (attackerCol < victimCol && victimCol + 1 < boardSize && victimRow - 1 >= 0 && checkersBoard[victimRow - 1][victimCol - 1] == '_') {
+                if (isMoveable(attackerRow, attackerCol, victimRow-1, victimCol+1)){
                     checkersBoard[victimRow][victimCol] = '_';
                     movePiece(attackerRow, attackerCol, victimRow - 1, victimCol + 1);
                     return true;
                 }
             }
-            if (attackerRow < victimRow && tmpAttacker == 'R') {
-                if (attackerCol > victimCol && victimCol - 1 >= 0 && victimRow + 1 < boardSize && checkersBoard[victimRow + 1][victimCol - 1] == '_') {
+            if (attackerRow < victimRow) {
+                if (isMoveable(attackerRow, attackerCol, victimRow+1, victimCol-1)){                        
                     checkersBoard[victimRow][victimCol] = '_';
                     movePiece(attackerRow, attackerCol, victimRow + 1, victimCol - 1);
                     return true;
                 }
-                if (attackerCol < victimCol && victimCol + 1 < boardSize && victimRow + 1 < boardSize && checkersBoard[victimRow + 1][victimCol - 1] == '_') {
+                if (isMoveable(attackerRow, attackerCol, victimRow+1, victimCol+1)){
                     checkersBoard[victimRow][victimCol] = '_';
                     movePiece(attackerRow, attackerCol, victimRow + 1, victimCol + 1);
                     return true;
@@ -165,5 +146,16 @@ public class CheckerBoard {
             }
         }
         return false;
+    }
+    
+    public int pieceCount(char type){
+        int count=0;
+        for(int i=0;i<boardSize;i++){
+            for(int j=0;j<boardSize;j++){
+                if((i+j)%2==0 && checkersBoard[i][j]==type)
+                    count++;
+            }
+        }
+        return count;
     }
 }
