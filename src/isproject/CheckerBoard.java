@@ -126,19 +126,19 @@ public class CheckerBoard {
                     movePiece(attackerRow, attackerCol, victimRow - 1, victimCol - 1);
                     return true;
                 }
-                if (isMoveable(attackerRow, attackerCol, victimRow-1, victimCol+1)){
+                if (isMoveable(attackerRow, attackerCol, victimRow - 1, victimCol + 1)) {
                     checkersBoard[victimRow][victimCol] = '_';
                     movePiece(attackerRow, attackerCol, victimRow - 1, victimCol + 1);
                     return true;
                 }
             }
             if (attackerRow < victimRow) {
-                if (isMoveable(attackerRow, attackerCol, victimRow+1, victimCol-1)){                        
+                if (isMoveable(attackerRow, attackerCol, victimRow + 1, victimCol - 1)) {
                     checkersBoard[victimRow][victimCol] = '_';
                     movePiece(attackerRow, attackerCol, victimRow + 1, victimCol - 1);
                     return true;
                 }
-                if (isMoveable(attackerRow, attackerCol, victimRow+1, victimCol+1)){
+                if (isMoveable(attackerRow, attackerCol, victimRow + 1, victimCol + 1)) {
                     checkersBoard[victimRow][victimCol] = '_';
                     movePiece(attackerRow, attackerCol, victimRow + 1, victimCol + 1);
                     return true;
@@ -147,13 +147,18 @@ public class CheckerBoard {
         }
         return false;
     }
-    
-    public int pieceCount(char type){
-        int count=0;
-        for(int i=0;i<boardSize;i++){
-            for(int j=0;j<boardSize;j++){
-                if((i+j)%2==0 && checkersBoard[i][j]==type)
-                    count++;
+
+    public int pieceCount(char type) {
+        int count = 0;
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                if ((i + j) % 2 == 0) {
+                    if (checkersBoard[i][j] == type) {
+                        count++;
+                    }else if(type=='R' && checkersBoard[i][j]=='E' ||type=='B' && checkersBoard[i][j]=='V' ){
+                        count++;
+                    }
+                }
             }
         }
         return count;

@@ -33,6 +33,12 @@ public class GameEngine {
         cb.cutPiece(5, 5, 4, 4);
         System.out.println("R"+cb.pieceCount('R')+" B"+cb.pieceCount('B'));
         cb.cutPiece(7,1,6,2);
+        cb.movePiece(1,1,2,0);
+        cb.movePiece(3,3,2,2);
+        cb.movePiece(0,0,1,1);
+        cb.cutPiece(2,2,1,1);
+        cb.movePiece(0,2,1,1);
+        cb.cutPiece(0,0,1,1);        
         cb.printBoard();
         System.out.println("R"+cb.pieceCount('R')+" B"+cb.pieceCount('B'));
         ////////////////////////////////*/
