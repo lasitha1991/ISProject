@@ -18,10 +18,12 @@ public class CheckerBoard {
         checkersBoard = new char[boardSize][boardSize];
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
-                checkersBoard[i][j] = '_';    //EMPTY cell
-            } 
+                if ((i + j) % 2 == 0) {
+                    checkersBoard[i][j] = '_';    //EMPTY cell
+                }
+            }
         }
-        for (int i = 0; i < (boardSize - 2) / 2; i++) {
+        for (int i = 0; i < (boardSize / 2) - 1; i++) {
             int j;
             if (i % 2 == 0) {
                 j = 0;
@@ -51,7 +53,11 @@ public class CheckerBoard {
         System.out.println("*********************************");
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
-                System.out.print(checkersBoard[i][j] + "\t");
+                if ((i + j) % 2 == 0) {
+                    System.out.print(checkersBoard[i][j] + " " + i + "," + j + "\t");
+                } else {
+                    System.out.print("\t");
+                }
             }
             System.out.println("");
         }

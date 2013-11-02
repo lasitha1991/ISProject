@@ -25,6 +25,10 @@ public class GameEngine {
             System.out.println("false");
         }
         cb.cutPiece(2, 2, 3, 3);
+        cb.cutPiece(5, 3, 4, 4);
+        cb.cutPiece(2, 6, 3, 5);
+        cb.cutPiece(5, 5, 4, 4);
+        cb.cutPiece(7,1,6,2);
         cb.printBoard();
         ////////////////////////////////*/
     }
