@@ -12,14 +12,18 @@ public class CheckerBoard {
 
     private char[][] checkersBoard;
     private int boardSize;
+    private char typeR,typeB,empty;
 
     public CheckerBoard(int size) {
         boardSize = size;
         checkersBoard = new char[boardSize][boardSize];
+        typeR='r';
+        typeB='b';
+        empty='_';
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
                 if ((i + j) % 2 == 0) {
-                    checkersBoard[i][j] = '_';    //EMPTY cell
+                    checkersBoard[i][j] = empty;    //EMPTY cell
                 }
             }
         }
@@ -31,7 +35,7 @@ public class CheckerBoard {
                 j = 1;
             }
             while (j < boardSize) {
-                checkersBoard[i][j] = 'R';    //RED piece
+                checkersBoard[i][j] = typeR;    //RED piece
                 j += 2;
             }
         }
@@ -43,7 +47,7 @@ public class CheckerBoard {
                 j = 1;
             }
             while (j < boardSize) {
-                checkersBoard[i][j] = 'B';     //BLACK piece
+                checkersBoard[i][j] = typeB;     //BLACK piece
                 j += 2;
             }
         }
@@ -67,13 +71,13 @@ public class CheckerBoard {
     public boolean movePiece(int sRow, int sCol, int dRow, int dCol) {
         if (isMoveable(sRow, sCol, dRow, dCol)) {
             char tmpType = checkersBoard[sRow][sCol];
-            checkersBoard[sRow][sCol] = '_';
+            checkersBoard[sRow][sCol] = empty;
             checkersBoard[dRow][dCol] = tmpType;
-            if (tmpType == 'R' && dRow == boardSize - 1) {
-                checkersBoard[dRow][dCol] = 'E';     //E to represent RED QUEEN
+            if (tmpType == typeR && dRow == boardSize - 1) {
+                checkersBoard[dRow][dCol] = Character.toUpperCase(typeR);     //uppercase typeR to represent RED QUEEN                
             }
-            if (tmpType == 'B' && dRow == 0) {
-                checkersBoard[dRow][dCol] = 'V';     //V to represent BLACK QUEEN
+            if (tmpType == typeB && dRow == 0) {
+                checkersBoard[dRow][dCol] = Character.toUpperCase(typeB);     //uppercase typeB to represent BLACK QUEEN
             }
             return true;
         }
@@ -87,19 +91,19 @@ public class CheckerBoard {
         if (dCol >= boardSize || dCol < 0) {
             return false;
         }
-        if (checkersBoard[sRow][sCol] == '_') {
+        if (checkersBoard[sRow][sCol] == empty) {
             return false;
-        } else if ((checkersBoard[dRow][dCol] == '_')) {
+        } else if ((checkersBoard[dRow][dCol] == empty)) {
             if (sCol == dCol) {
                 return false;
             }
             char tmpType = checkersBoard[sRow][sCol];
-            if (tmpType == 'R') {
+            if (tmpType == typeR) {
                 if (sRow - dRow >= 0) {
                     return false;
                 }
             }
-            if (tmpType == 'B') {
+            if (tmpType == typeB) {
                 if (sRow - dRow <= 0) {
                     return false;
                 }
@@ -111,7 +115,7 @@ public class CheckerBoard {
 
     public boolean cutPiece(int attackerRow, int attackerCol, int victimRow, int victimCol) {
         char tmpAttacker, tmpVictim;
-        if (checkersBoard[attackerRow][attackerCol] == '_' || checkersBoard[victimRow][victimCol] == '_') {
+        if (checkersBoard[attackerRow][attackerCol] == empty || checkersBoard[victimRow][victimCol] == empty) {
             return false;
         } else {
             tmpAttacker = checkersBoard[attackerRow][attackerCol];
@@ -122,24 +126,24 @@ public class CheckerBoard {
         } else {
             if (attackerRow > victimRow) {
                 if (isMoveable(attackerRow, attackerCol, victimRow - 1, victimCol - 1)) {
-                    checkersBoard[victimRow][victimCol] = '_';
+                    checkersBoard[victimRow][victimCol] = empty;
                     movePiece(attackerRow, attackerCol, victimRow - 1, victimCol - 1);
                     return true;
                 }
                 if (isMoveable(attackerRow, attackerCol, victimRow - 1, victimCol + 1)) {
-                    checkersBoard[victimRow][victimCol] = '_';
+                    checkersBoard[victimRow][victimCol] = empty;
                     movePiece(attackerRow, attackerCol, victimRow - 1, victimCol + 1);
                     return true;
                 }
             }
             if (attackerRow < victimRow) {
                 if (isMoveable(attackerRow, attackerCol, victimRow + 1, victimCol - 1)) {
-                    checkersBoard[victimRow][victimCol] = '_';
+                    checkersBoard[victimRow][victimCol] = empty;
                     movePiece(attackerRow, attackerCol, victimRow + 1, victimCol - 1);
                     return true;
                 }
                 if (isMoveable(attackerRow, attackerCol, victimRow + 1, victimCol + 1)) {
-                    checkersBoard[victimRow][victimCol] = '_';
+                    checkersBoard[victimRow][victimCol] = empty;
                     movePiece(attackerRow, attackerCol, victimRow + 1, victimCol + 1);
                     return true;
                 }
@@ -153,9 +157,7 @@ public class CheckerBoard {
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
                 if ((i + j) % 2 == 0) {
-                    if (checkersBoard[i][j] == type) {
-                        count++;
-                    }else if(type=='R' && checkersBoard[i][j]=='E' ||type=='B' && checkersBoard[i][j]=='V' ){
+                    if(checkersBoard[i][j]==Character.toUpperCase(type) || checkersBoard[i][j]==Character.toLowerCase(type)){
                         count++;
                     }
                 }
