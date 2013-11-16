@@ -157,7 +157,7 @@ public class CheckerBoard {
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
                 if ((i + j) % 2 == 0) {
-                    if(checkersBoard[i][j]==Character.toUpperCase(type) || checkersBoard[i][j]==Character.toLowerCase(type)){
+                    if(isUsedByNormalPiece(type, i, j) || isUsedByQueen(type, i, j)){
                         count++;
                     }
                 }
@@ -165,4 +165,18 @@ public class CheckerBoard {
         }
         return count;
     }
+    
+    public boolean isUsedByNormalPiece(char type, int row,int col){
+        if(checkersBoard[row][col]==Character.toLowerCase(type)){
+            return true;
+        }
+        return false;
+    }
+    public boolean isUsedByQueen(char type, int row,int col){
+        if(checkersBoard[row][col]==Character.toUpperCase(type)){
+            return true;
+        }
+        return false;
+    }
+    
 }
