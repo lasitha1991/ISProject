@@ -17,6 +17,6 @@ public class CheckersFrame extends JFrame {
         setResizable(false);
     }
     public void updateFrame(){
-        panel.updateChipInfo();
+        panel.repaint();
     }
 }
