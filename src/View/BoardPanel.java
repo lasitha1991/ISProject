@@ -1,3 +1,5 @@
+package View;
+
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
@@ -7,13 +9,15 @@ import javax.swing.ImageIcon;
 
 import javax.swing.JPanel;
 
-public class Board extends JPanel {
+
+public class BoardPanel extends JPanel {
     
     Image boardImg, blackchipImg, redchipImg, crownImg;
     Chip[] blackchips;
     Chip[] redchips;
-    
-    public Board() {
+    Logic.CheckerBoard checkersBoard;
+    public BoardPanel(Logic.CheckerBoard cb) {
+        checkersBoard=cb;
         ImageIcon boardIcon = new ImageIcon(this.getClass().getResource("board.png"));
         boardImg = boardIcon.getImage();
         ImageIcon blackchipIcon = new ImageIcon(this.getClass().getResource("blackchip.png"));
@@ -57,12 +61,11 @@ public class Board extends JPanel {
         return row * 70 + 20;
     }
     
-    public void updateChipInfo(){
-        
+    public void updateChipInfo(){        
+       
     }
             
 }
-
 class Chip{
     int col, row;
     boolean onBoard, isKing;

@@ -2,7 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package isproject;
+package Logic;
+
+import View.CheckersFrame;
 
 /**
  *
@@ -11,9 +13,10 @@ package isproject;
 public class GameEngine {
 
     private CheckerBoard cb;
-
+    private View.CheckersFrame checkersFrame;
     public GameEngine() {
         cb = new CheckerBoard(8);
+        checkersFrame=new CheckersFrame(cb);
         /////////////////////////////testing
         cb.printBoard();
         cb.movePiece(2, 0, 4, 2);
@@ -40,6 +43,7 @@ public class GameEngine {
         cb.movePiece(0,2,1,1);
         cb.cutPiece(0,0,1,1);        
         cb.printBoard();
+        checkersFrame.updateFrame();
         System.out.println("R"+cb.pieceCount('R')+" B"+cb.pieceCount('B'));
         ////////////////////////////////*/
     }
