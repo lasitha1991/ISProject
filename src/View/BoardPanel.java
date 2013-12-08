@@ -8,6 +8,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 import javax.swing.JPanel;
+import Logic.Chip;
 
 public class BoardPanel extends JPanel {
 
@@ -45,20 +46,20 @@ public class BoardPanel extends JPanel {
         updateChipInfo();
         for (int i = 0; i < redMax; i++) {
             //place red chips on the board
-            g2d.drawImage(redchipImg, pixelXPos(redchips[i].col, redchips[i].row), pixelYPos(redchips[i].row), null);
+            g2d.drawImage(redchipImg, pixelXPos(redchips[i].getCol(), redchips[i].getRow()), pixelYPos(redchips[i].getRow()), null);
             //if the chip is a king, overlap with a crown
-            if (redchips[i].isKing) {
-                g2d.drawImage(crownImg, pixelXPos(redchips[i].col, redchips[i].row), pixelYPos(redchips[i].row), null);
+            if (redchips[i].isKing()) {
+                g2d.drawImage(crownImg, pixelXPos(redchips[i].getCol(), redchips[i].getRow()), pixelYPos(redchips[i].getRow()), null);
             }
             //System.out.print(redchips[i].row+","+redchips[i].col+" ");
         }
         //System.out.println("");
         for (int i = 0; i < blackMax; i++) {
             //place black chips on the board
-            g2d.drawImage(blackchipImg, pixelXPos(blackchips[i].col, blackchips[i].row), pixelYPos(blackchips[i].row), null);
+            g2d.drawImage(blackchipImg, pixelXPos(blackchips[i].getCol(), blackchips[i].getRow()), pixelYPos(blackchips[i].getRow()), null);
             //if the chip is a king, overlap with a crown
-            if (blackchips[i].isKing) {
-                g2d.drawImage(crownImg, pixelXPos(blackchips[i].col, blackchips[i].row), pixelYPos(blackchips[i].row), null);
+            if (blackchips[i].isKing()) {
+                g2d.drawImage(crownImg, pixelXPos(blackchips[i].getCol(), blackchips[i].getRow()), pixelYPos(blackchips[i].getRow()), null);
             }
             //System.out.print(blackchips[i].row+","+blackchips[i].col+" ");
         }
@@ -83,16 +84,16 @@ public class BoardPanel extends JPanel {
             for (int col = 0; col < checkersBoard.getSize(); col++) {
                 tmpChip = new Chip(col / 2, row);
                 if (checkersBoard.isUsed('R', row, col)) {
-                    tmpChip.onBoard = true;
+                    tmpChip.setOnBoard(true);
                     if (checkersBoard.isUsedByQueen('R', row, col)) {
-                        tmpChip.isKing = true;
+                        tmpChip.setIsKing(true);
                     }
                     redchips[redMax++] = tmpChip;
                 }
                 if (checkersBoard.isUsed('B', row, col)) {
-                    tmpChip.onBoard = true;
+                    tmpChip.setOnBoard(true);
                     if (checkersBoard.isUsedByQueen('B', row, col)) {
-                        tmpChip.isKing = true;
+                        tmpChip.setIsKing(true);
                     }
                     blackchips[blackMax++] = tmpChip;
                 }
@@ -101,15 +102,3 @@ public class BoardPanel extends JPanel {
     }
 }
 
-class Chip {
-
-    int col, row;
-    boolean onBoard, isKing;
-
-    public Chip(int col, int row) {
-        this.col = col;
-        this.row = row;
-        onBoard = true;
-        isKing = false;
-    }
-}
