@@ -15,12 +15,12 @@ import java.util.logging.Logger;
 public class GameEngine {
 
     private final CheckerBoard cb;
-    //private View.CheckersFrame checkersFrame;
+    private View.CheckersFrame checkersFrame;
     public GameEngine(){
         cb = new CheckerBoard(8);
-        //checkersFrame=new CheckersFrame(cb);
+        checkersFrame=new CheckersFrame(cb);
         /////////////////////////////testing
-              
+        
         redrawGUI();        
         
         cb.movePiece(2, 0, 3, 1);
@@ -70,7 +70,7 @@ public class GameEngine {
     }
     public void redrawGUI(){
         try {
-            //checkersFrame.updateFrame();            
+            checkersFrame.updateFrame();            
             cb.printBoard();
             System.out.println("R"+cb.pieceCount('R')+" B"+cb.pieceCount('B'));
             System.out.println("R"+cb.calcHeuristicValue('R')+" B"+cb.calcHeuristicValue('B'));
