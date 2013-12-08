@@ -131,6 +131,10 @@ public class CheckerBoard {
                     return false;
                 }
             }
+            if(Math.abs(dCol-sCol)>2 || Math.abs(dRow-sRow)>2){
+                //not allowing too long moves
+                return false;
+            }
             return true;
         }
         return false;
