@@ -19,4 +19,10 @@ public class CheckersFrame extends JFrame {
     public void updateFrame(){
         panel.repaint();
     }
+    public int getGameState(){
+        return BoardPanel.getGameState();
+    }
+    public char getPlayerColor(){
+        return BoardPanel.getPlayerColor();
+    }
 }
