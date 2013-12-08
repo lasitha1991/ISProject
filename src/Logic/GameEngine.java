@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  */
 public class GameEngine {
 
-    private CheckerBoard cb;
+    private final CheckerBoard cb;
     //private View.CheckersFrame checkersFrame;
     public GameEngine(){
         cb = new CheckerBoard(8);

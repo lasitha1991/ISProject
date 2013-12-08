@@ -262,6 +262,18 @@ public class CheckerBoard {
         return -1;
     }
 
+    public int calcHeuristicValueEnding(char type) {
+        HashMap<Character, Integer> map = calcBoardHeuristicValueEnding1();
+        int heuristicValueR = map.get(typeR);
+        int heuristicValueB = map.get(typeB);
+        if (Character.toLowerCase(type) == Character.toLowerCase(typeR)) {
+            return heuristicValueR - heuristicValueB;
+        } else if (Character.toLowerCase(type) == Character.toLowerCase(typeB)) {
+            return heuristicValueB - heuristicValueR;
+        }
+        return -1;
+    }
+
     private HashMap calcBoardHeuristicValue3() {
         int heuristicValueR = 0;
         int heuristicValueB = 0;
@@ -348,7 +360,91 @@ public class CheckerBoard {
         heuristicValueB=heuristicValueB*10/this.pieceCount(typeB);
         map.put(typeB, (int)heuristicValueB);
         map.put(typeR, (int)heuristicValueR);
-        return map;
+        return map;        
+    }
+    
+    private HashMap calcBoardHeuristicValueEnding1() {               
+        HashMap<Character, Integer> map;
+        map = new HashMap<Character, Integer>();
+        int heuristicValueR = 0;
+        int heuristicValueB = 0;
         
+        for(Chip tmp:typeRList){
+            int distance=1;
+            if(tmp.isOnBoard()){
+                for(int i=Math.max(0, tmp.getRow()-distance);i<Math.min(boardSize, tmp.getRow()+distance);i++ ){
+                    for(int j=Math.max(0, tmp.getCol()-distance);j<Math.min(boardSize, tmp.getCol()+distance);j++){
+                        if(Character.toUpperCase(checkersBoard[i][j])==Character.toUpperCase(typeB)){
+                            heuristicValueR+=distance;
+                        }
+                    }
+                }
+            }
+        }
+        for(Chip tmp:typeBList){
+            int distance=1;
+            if(tmp.isOnBoard()){
+                for(int i=Math.max(0, tmp.getRow()-distance);i<Math.min(boardSize, tmp.getRow()+distance);i++ ){
+                    for(int j=Math.max(0, tmp.getCol()-distance);j<Math.min(boardSize, tmp.getCol()+distance);j++){
+                        if(Character.toUpperCase(checkersBoard[i][j])==Character.toUpperCase(typeR)){
+                            heuristicValueB+=distance;
+                        }
+                    }
+                }
+            }
+        }                
+        
+        map.put(typeB, heuristicValueB);
+        map.put(typeR, heuristicValueR);
+        return map;        
+    }
+    
+    
+    private HashMap calcBoardHeuristicValueEnding2() {               
+        HashMap<Character, Integer> map;
+        map = new HashMap<Character, Integer>();
+        int heuristicValueR = 0;
+        int heuristicValueB = 0;
+        
+        for(Chip tmp:typeRList){
+            int distance=boardSize-1;
+            boolean done=false;
+            if(tmp.isOnBoard()){
+                for(int i=Math.min(boardSize-1, tmp.getRow()+distance);i>=Math.max(0, tmp.getRow()-distance);i-- ){
+                    for(int j=Math.min(boardSize-1, tmp.getCol()+distance);j>=Math.max(0, tmp.getCol()-distance);j--){
+                        if(Character.toUpperCase(checkersBoard[i][j])==Character.toUpperCase(typeB)){
+                            heuristicValueR=distance;
+                            done=true;
+                            break;
+                        }
+                    }
+                    if(done){
+                        break;
+                    }
+                }
+            }
+        }
+        for(Chip tmp:typeBList){
+            int distance=boardSize-1;
+            boolean done=false;
+            if(tmp.isOnBoard()){
+                for(int i=Math.min(boardSize-1, tmp.getRow()+distance);i>=Math.max(0, tmp.getRow()-distance);i-- ){
+                    for(int j=Math.min(boardSize-1, tmp.getCol()+distance);j>=Math.max(0, tmp.getCol()-distance);j--){
+                        if(Character.toUpperCase(checkersBoard[i][j])==Character.toUpperCase(typeR)){
+                            heuristicValueB=distance;
+                            done=true;
+                            break;
+                        }
+                    }
+                    if(done){
+                        break;
+                    }
+                }
+            }
+        }                
+        
+        map.put(typeB, heuristicValueB);
+        map.put(typeR, heuristicValueR);
+        return map;        
     }
 }
