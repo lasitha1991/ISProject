@@ -67,8 +67,15 @@ public class GameEngine {
         Thread.sleep(2000);
         
         System.out.println("R"+cb.pieceCount('R')+" B"+cb.pieceCount('B'));
-        cb.cutPiece(2, 0, 1, 1);
+        cb.cutPiece(2, 0, 1, 1);        
+        checkersFrame.updateFrame();
+        Thread.sleep(2000);
         
+        cb.movePiece(0, 0, 1, 1);
+        checkersFrame.updateFrame();
+        Thread.sleep(2000);
+        
+        cb.cutPiece(0, 2, 1, 1);       
         checkersFrame.updateFrame();
         Thread.sleep(2000);
         /*
