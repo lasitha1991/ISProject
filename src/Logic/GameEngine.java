@@ -20,7 +20,9 @@ public class GameEngine {
         cb = new CheckerBoard(8);
         checkersFrame=new CheckersFrame(cb);
         /////////////////////////////testing
-        
+        while(checkersFrame.getGameState()==0){
+            
+        }
         redrawGUI();        
         
         cb.movePiece(2, 0, 3, 1);

@@ -185,4 +185,17 @@ public final class BoardPanel extends JPanel {
             }
         }
     }
+
+    public static int getGameState() {
+        return gameState;
+    }
+
+    public static char getPlayerColor() {
+        if(playerColor==0)
+            return 'B';
+        if(playerColor==1)
+            return 'R';
+        return '_';
+    }
+    
 }
